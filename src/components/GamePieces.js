@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 const GamePieces = ({ score, setScore, onGameOver }) => {
   const canvasRef = useRef();
-  const [speed, setSpeed] = useState(10); 
+  const [speed, setSpeed] = useState(10);
   const [apple, setApple] = useState({ x: 180, y: 100, size: 12 });
   const [pineapple, setPineapple] = useState({ x: -100, y: -100, size: 20 });
   const [snake, setSnake] = useState([
@@ -12,7 +12,6 @@ const GamePieces = ({ score, setScore, onGameOver }) => {
   const [direction, setDirection] = useState(null);
   const [applesEaten, setApplesEaten] = useState(0);
   const [pineappleVisible, setPineappleVisible] = useState(false);
-  const [intervalId, setIntervalId] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,13 +33,13 @@ const GamePieces = ({ score, setScore, onGameOver }) => {
     const ctx = canvas.getContext("2d");
 
     const getBackgroundColor = () => {
-      if (score < 5) return "#f0f8ff"; 
-      if (score < 10) return "#faebd7"; 
-      return "#ffebcd"; 
+      if (score < 5) return "#f0f8ff";
+      if (score < 10) return "#faebd7";
+      return "#ffebcd";
     };
 
     const drawSnake = () => {
-      ctx.fillStyle = "#90EE90"; 
+      ctx.fillStyle = "#90EE90";
       snake.forEach((snakePart, index) => {
         if (index === 0) {
           ctx.font = "14px Arial";
@@ -133,7 +132,6 @@ const GamePieces = ({ score, setScore, onGameOver }) => {
         setScore((prevScore) => prevScore + 1);
         setApplesEaten((prevCount) => prevCount + 1);
 
-        
         setApple({
           x: Math.floor((Math.random() * (canvas.width - apple.size)) / speed) * speed,
           y: Math.floor((Math.random() * (canvas.height - apple.size)) / speed) * speed,
@@ -150,7 +148,6 @@ const GamePieces = ({ score, setScore, onGameOver }) => {
           });
           setPineappleVisible(true);
 
-          
           setTimeout(() => {
             setPineappleVisible(false);
           }, 6000);
@@ -171,12 +168,10 @@ const GamePieces = ({ score, setScore, onGameOver }) => {
         snakeHead.y < pineappleEndY &&
         snakeHeadEndY > pineapple.y
       ) {
-        setScore((prevScore) => prevScore + 5); 
-
-     
+        setScore((prevScore) => prevScore + 5);
         setPineapple({ x: -100, y: -100, size: 20 });
         setPineappleVisible(false);
-        setApplesEaten(0); 
+        setApplesEaten(0);
       }
     };
 
@@ -201,7 +196,6 @@ const GamePieces = ({ score, setScore, onGameOver }) => {
 
     window.addEventListener("keydown", handleKeyPress);
 
-    
     const newIntervalId = setInterval(() => {
       ctx.fillStyle = getBackgroundColor();
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -211,13 +205,11 @@ const GamePieces = ({ score, setScore, onGameOver }) => {
       moveSnake();
     }, 100 - speed);
 
-    setIntervalId(newIntervalId);
-
     return () => {
       clearInterval(newIntervalId);
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [snake, direction, apple, pineapple, applesEaten, score, pineappleVisible, speed]);
+  }, [snake, direction, apple, pineapple, applesEaten, score, pineappleVisible, speed, onGameOver, setScore]);
 
   const increaseSpeed = () => {
     setSpeed((prevSpeed) => Math.min(prevSpeed + 2, 20));
