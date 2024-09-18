@@ -30,7 +30,7 @@ Clone the repository:
 
 bash
 Copy code
-git clone https://github.com/yourusername/snake-game.git
+git clone https://github.com/ahamito/SnackGame.git
 cd snake-game
 Install dependencies:
 
@@ -63,5 +63,4 @@ Storing the high score using local storage.
 Adham Almechkor
 Full Stack Developer
 LinkedIn | GitHub
-📝 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+
